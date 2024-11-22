@@ -9,6 +9,10 @@ if (first()) {
     
 }
 
+if (clk()) {
+    Clk = 0
+}
+
 
 event input(InputName:string) {
     RawData = table()
@@ -64,5 +68,6 @@ event input(InputName:string) {
     for (Idx = 1, RawString:length(), 1) {
         Data:pushNumber(toUnicodeByte(RawString[Idx]))
     }
-    Clk = Clk + 1
+    Clk = 1
+    interval(50)
 }

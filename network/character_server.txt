@@ -1,0 +1,46 @@
+@name AA Character Server
+@inputs [On Send]:number Data:array [DataRecieveLane]:number
+@outputs SendData:number Clk:number
+@persist TransmitIdx:number
+@strict
+
+const TRANSMIT_FREQUENCY = 10
+
+
+if (first()) {
+    Clk = 0
+    SendData = 0
+}
+
+
+if (clk() & On) {
+    if (Clk == 1) {
+        Clk = 0
+        if (SendData == -2) {
+            SendData = 0
+            TransmitIdx = 0
+        } else {
+            interval(TRANSMIT_FREQUENCY)
+        }
+    } else {
+        if (TransmitIdx == Data:count()) {
+            SendData = -2
+            Clk = 1
+        } else {
+            SendData = Data[TransmitIdx, number]
+            Clk = 1
+            TransmitIdx = TransmitIdx + 1
+        }
+        interval(TRANSMIT_FREQUENCY)
+    }
+}
+
+
+event input(InputName:string) {
+    if (InputName == "Send" & On) {
+        SendData = -1
+        Clk = 1
+        TransmitIdx = 1
+        interval(TRANSMIT_FREQUENCY)
+    }
+}
