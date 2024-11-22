@@ -1,0 +1,68 @@
+@name AA Character Encoder
+@inputs [Name WarPattern CastingStyle]:string [STR SKL DEX BRV SAN ABS Knowledge Perception Speechcraft Abilities]:number EncodedProfession:array EncodedProficiency:array
+@outputs Data:array Clk:number
+@strict
+@persist RawData:table
+if (first()) {
+    Clk = 0
+    RawData = table()
+    
+}
+
+
+event input(InputName:string) {
+    RawData = table()
+    switch (InputName) {
+        case "Name",
+            RawData["Name"] = Name
+            break
+        case "WarPattern",
+            RawData["WarPattern"] = WarPattern
+            break
+        case "CastingStyle",
+            RawData["CastingStyle"] = CastingStyle
+            break
+        case "STR",
+            RawData["STR"] = STR
+            break
+        case "SKL",
+            RawData["SKL"] = SKL
+            break
+        case "DEX",
+            RawData["DEX"] = DEX
+            break
+        case "BRV",
+            RawData["BRV"] = BRV
+            break
+        case "SAN",
+            RawData["SAN"] = SAN
+            break
+        case "ABS",
+            RawData["ABS"] = ABS
+            break
+        case "Knowledge",
+            RawData["Knowledge"] = Knowledge
+            break
+        case "Perception",
+            RawData["Perception"] = Perception
+            break
+        case "Speechcraft",
+            RawData["Speechcraft"] = Speechcraft
+            break
+        case "Abilities",
+            RawData["Abilities"] = Abilities
+            break
+        case "EncodedProfession",
+            RawData["EncodedProfession"] = EncodedProfession
+            break
+        case "EncodedProficiency",
+            RawData["EncodedProficiency"] = EncodedProficiency
+            break
+    }
+    RawString = vonEncode(RawData)
+    Data = array()
+    for (Idx = 1, RawString:length(), 1) {
+        Data:pushNumber(toUnicodeByte(RawString[Idx]))
+    }
+    Clk = Clk + 1
+}

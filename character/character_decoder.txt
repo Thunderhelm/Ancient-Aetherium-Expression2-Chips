@@ -1,0 +1,30 @@
+@name AA Character Decoder
+@inputs Data:array
+@outputs [Name WarPattern CastingStyle]:string [STR SKL DEX BRV SAN ABS Knowledge Perception Speechcraft Abilities]:number EncodedProfession:array EncodedProficiency:array
+@persist 
+@strict
+
+
+event input(InputEvent:string) {
+    RawString = ""
+    for (Idx = 1, Data:count(), 1) {
+        RawString = RawString + toUnicodeChar(Data[Idx, number])
+    }
+    RawData = vonDecodeTable(RawString)
+    print(RawData)
+    if (RawData:exists("Name")) {Name = RawData["Name", string]}
+    if (RawData:exists("WarPattern")) {WarPattern = RawData["WarPattern", string]}
+    if (RawData:exists("CastingStyle")) {CastingStyle = RawData["CastingStyle", string]}
+    if (RawData:exists("STR")) {STR = RawData["STR", number]}
+    if (RawData:exists("SKL")) {SKL = RawData["SKL", number]}
+    if (RawData:exists("DEX")) {DEX = RawData["DEX", number]}
+    if (RawData:exists("BRV")) {BRV = RawData["BRV", number]}
+    if (RawData:exists("SAN")) {SAN = RawData["SAN", number]}
+    if (RawData:exists("ABS")) {ABS = RawData["ABS", number]}
+    if (RawData:exists("Knowledge")) {Knowledge = RawData["Knowledge", number]}
+    if (RawData:exists("Perception")) {Perception = RawData["Perception", number]}
+    if (RawData:exists("Speechcraft")) {Speechcraft = RawData["Speechcraft", number]}
+    if (RawData:exists("Abilities")) {Abilities = RawData["Abilities", number]}
+    if (RawData:exists("EncodedProfession")) {EncodedProfession = RawData["EncodedProfession", array]}
+    if (RawData:exists("EncodedProficiency")) {EncodedProficiency = RawData["EncodedProficiency", array]}
+}
